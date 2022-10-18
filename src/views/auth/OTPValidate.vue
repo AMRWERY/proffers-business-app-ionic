@@ -1,47 +1,47 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Auth</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <HeaderTitleVue/>
         <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">Authentication</ion-title>
-                </ion-toolbar>
-            </ion-header>
             <div class="otp-form">
-                <h2>Enter OTP</h2>
+                <h5>Enter password</h5>
                 <form @submit.prevent="verifyOtp()">
                     <ion-row>
                         <ion-col>
-                            <ion-input id="1" maxlength="1" class="x" @keyup="handleKeyDown(2, $event)"
+                            <ion-input id="1" maxlength="1" type="number" class="x" @keyup="handleKeyDown(2, $event)"
                                 @keypress="onlyNumber($event)"></ion-input>
-                            <ion-input id="2" maxlength="1" class="x" @keyup="handleKeyDown(3, $event)"
+                            <ion-input id="2" maxlength="1" type="number" class="x" @keyup="handleKeyDown(3, $event)"
                                 @keypress="onlyNumber($event)"></ion-input>
-                            <ion-input id="3" maxlength="1" class="x" @keyup="handleKeyDown(4, $event)"
+                            <ion-input id="3" maxlength="1" type="number" class="x" @keyup="handleKeyDown(4, $event)"
                                 @keypress="onlyNumber($event)"></ion-input>
-                            <ion-input id="4" maxlength="1" class="x" @keyup="handleKeyDown(5, $event)"
+                            <ion-input id="4" maxlength="1" type="number" class="x" @keyup="handleKeyDown(5, $event)"
                                 @keypress="onlyNumber($event)"></ion-input>
                         </ion-col>
                     </ion-row>
                     <InputValidationText :text=validationMsg /><br>
-                    <ion-button type="submit" shape="round">Submit</ion-button>
+                    <ion-button type="submit" shape="round">SUBMIT</ion-button>
                 </form>
             </div>
+            <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                <ion-fab-button @click="() => router.push('/auth/generate-otp/')">
+                    <ion-icon :icon="arrowBackCircle"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
         </ion-content>
     </ion-page>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonRow, IonCol, IonButton } from '@ionic/vue';
-import CommonUtils from '../../utils/commonUtils'
-import InputValidationText from '../../components/InputValidationText.vue'
-import router from "../../router";
+import { IonPage, IonContent, IonInput, IonRow, IonCol, IonButton, IonFab, IonFabButton, IonIcon } from '@ionic/vue';
+import {
+    arrowBackCircle
+} from 'ionicons/icons';
+import InputValidationText from '../../components/InputValidationText.vue';
+import HeaderTitleVue from '../../components/HeaderTitle.vue';
+import CommonUtils from '../../utils/commonUtils';
 import OTPAuth from '../../services/auth/OTPAuth';
-import TokenService from "../../utils/TokenService"
+import TokenService from "../../utils/TokenService";
+import router from "../../router";
 
 function onlyNumber($event) {
     new CommonUtils().onlyNumber($event)
@@ -95,21 +95,20 @@ async function verifyOtp() {
             await TokenService.saveToken(response.data)
             const user = await TokenService.getUser()
             if (user.business.length === 0) {
-                router.push({
-                    name: "create-business"
-                })
+                validationMsg.value = "No business found for user."
+                // router.push({
+                //     name: "create-business"
+                // })
             } else if (user.business.length === 1) {
                 router.push({
                     path: "/tabs/tab1"
                 })
             } else {
-                router.push({
-                    path: "/tabs/tab2"
-                })
+                console.log("ERROR")
             }
 
         } else {
-            validationMsg.value = "OTP not matched!"
+            validationMsg.value = "Password not matched or No business found for user."
         }
     }
 }

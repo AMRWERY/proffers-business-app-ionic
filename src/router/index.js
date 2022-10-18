@@ -21,6 +21,15 @@ const routes = [
     component: () => import('@/views/auth/OTPValidate.vue'),
   },
   {
+    path: '/auth/logout/',
+    component: () => import('@/views/auth/LogOut.vue'),
+  },
+  {
+    path: '/business/details/',
+    component: () => import('@/views/business/BusinessDetailsView.vue'),
+    name: "business-details"
+  },
+  {
     path: '/business/create/',
     component: () => import('@/views/business/CreateBusiness.vue'),
     name: "create-business"
@@ -29,6 +38,26 @@ const routes = [
     path: '/business/address/create/',
     component: () => import('@/views/business/CreateBusinessAddress.vue'),
     name: "create-business-address"
+  },
+  {
+    path: '/sale/create/',
+    component: () => import('@/views/sale/CreateSale.vue'),
+    name: "create-sale"
+  },
+  {
+    path: '/offer/create/',
+    component: () => import('@/views/offer/CreateOffer.vue'),
+    name: "create-offer"
+  },
+  {
+    path: '/offer/discount/',
+    component: () => import('@/views/offer/DiscountOffer.vue'),
+    name: "view-discount"
+  },
+  {
+    path: '/sales/',
+    component: () => import('@/views/sale/SalesListing.vue'),
+    name: "list-sales"
   },
   {
     path: '/tabs/',

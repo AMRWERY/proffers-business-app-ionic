@@ -1,17 +1,9 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>MAA BUSINESS</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <HeaderTitleVue />
         <ion-content :fullscreen="true">
             <div class="business-form">
-                <ion-title size="large">Register Business</ion-title>
-                <br>
-
-                {{business_details}}
-                <br>
+                <h3>Register business</h3>
                 <form class="" @submit.prevent="createBusinessDetails()">
                     <ion-item>
                         <ion-label position="stacked">Business Name</ion-label>
@@ -20,8 +12,6 @@
                     <ion-item>
                         <ion-label position="stacked">Email</ion-label>
                         <ion-input required type="email" v-model="business_details.email"></ion-input>
-                        <!-- <ion-note slot="helper">Enter a valid email</ion-note>
-                        <ion-note slot="error">Invalid email</ion-note> -->
                     </ion-item>
                     <ion-item>
                         <ion-label position="stacked">Type</ion-label>
@@ -40,7 +30,7 @@
                     </ion-item>
                     <br>
                     <InputValidationText :text=validationMsg /><br>
-                    <ion-button type="submit" shape="round">Next</ion-button>
+                    <ion-button type="submit" shape="round">NEXT</ion-button>
                 </form>
             </div>
         </ion-content>
@@ -49,9 +39,7 @@
 
 <script setup>
 import {
-    IonPage, IonHeader, IonToolbar,
-    IonContent, IonTitle, IonItem, IonInput,
-    IonLabel, IonSelect, IonSelectOption, IonButton,
+    IonPage,
 } from '@ionic/vue';
 
 import { ref, reactive, onMounted } from 'vue';
@@ -60,7 +48,7 @@ import InputValidationText from '../../components/InputValidationText.vue'
 import Business from "../../services/business/business"
 import router from "../../router";
 import TokenService from "../../utils/TokenService"
-
+import HeaderTitleVue from '../../components/HeaderTitle.vue';
 
 const validationMsg = ref("")
 const business_type = reactive({ "arr": [] })

@@ -17,4 +17,10 @@ export default class Business {
         let response = await new RequestMaker().POST(data, endpoint);
         return response;
     }
+    async getBusiness() {
+        let business_id = await TokenService.getBusinessID()
+        let endpoint = "business/".concat(business_id);
+        let response = await new RequestMaker().GET(endpoint);
+        return response;
+    }
 }

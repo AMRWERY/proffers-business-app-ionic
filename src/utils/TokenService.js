@@ -5,6 +5,7 @@ store.create();
 
 const TOKEN_KEY = "access_token";
 const USER = "user"
+const BUSINESS_ID = "business_id"
 
 const TokenService = {
     async getToken() {
@@ -13,17 +14,21 @@ const TokenService = {
     async getUser() {
         return await store.get(USER);
     },
+    async getBusinessID(){
+        return await store.get(BUSINESS_ID);
+    },
     async updateUserBusiness(business){
         // add user business on registering business
         let user = await store.get(USER)
-        business.address = {} // initializing empty address
+        business.address = [] // initializing empty address
         user.business.push(business)
         store.remove(USER)
         store.set(USER, user)
+        store.set(BUSINESS_ID, business.id)
     },
     async updateAddress(address){
         let user = await store.get(USER)
-        user.business.address = address
+        user.business[0].address.push(address)
         store.remove(USER)
         store.set(USER, user)
     },
@@ -31,7 +36,15 @@ const TokenService = {
         // save token and user data
         await store.set(TOKEN_KEY, data.token);
         await store.set(USER, data.user);
+        if (data.user.business.length === 1){
+            store.set(BUSINESS_ID, data.user.business[0].id)
+        }
     },
+    async EraseData() {
+        await store.remove(USER);
+        await store.remove(TOKEN_KEY);
+        await store.remove(BUSINESS_ID);
+    }
 }
 
 export default TokenService

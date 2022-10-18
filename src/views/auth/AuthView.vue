@@ -11,22 +11,20 @@ import router from "../../router";
 // get token from local storage ? get business : do auth
 onMounted(async () => {
     const token = await TokenService.getToken()
-    console.log(token, "111")
+
     if (token === null){
         router.push({
             name:"generate-otp"
         })
     } else if (token !== null){
         const user = await TokenService.getUser()
-        
+        console.log(user)
         if (user.business.length === 0){
            router.push({
                 name:"create-business"
            })
         } else if (user.business.length === 1) {
-            if (user.business.address === undefined){
-                console.log("0k")
-
+            if (user.business[0].address.length === 0){
                 router.push({
                     name:"create-business-address"
                 })

@@ -1,17 +1,8 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Auth</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <HeaderTitleVue />
         <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">Authentication</ion-title>
-                </ion-toolbar>
-            </ion-header>
-            <div id="container">
+            <div class="container">
                 <div class="input">
                     <form @submit.prevent="sendOtp()">
                         <ion-item>
@@ -21,8 +12,12 @@
                             </ion-input>
                         </ion-item>
                         <InputValidationText :text=validationMsg /><br>
-                        <ion-button type="submit" shape="round">Verify</ion-button>
+                        <ion-button type="submit" shape="round">VERIFY</ion-button>
                     </form>
+                </div>
+                <div>
+                    <h6>To register business contact</h6>
+                    <p>+91 8200055728</p>
                 </div>
             </div>
         </ion-content>
@@ -31,10 +26,10 @@
 
 <script setup>
 import { ref } from 'vue'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonButton, IonItem, IonLabel } from '@ionic/vue';
-import InputValidationText from '../../components/InputValidationText.vue'
-import CommonUtils from '../../utils/commonUtils'
-import OTPAuth from '../../services/auth/OTPAuth';
+import { IonPage, IonContent, IonInput, IonButton, IonItem, IonLabel } from '@ionic/vue';
+import InputValidationText from '../../components/InputValidationText.vue';
+import HeaderTitleVue from '../../components/HeaderTitle.vue';
+import CommonUtils from '../../utils/commonUtils';
 import router from "../../router";
 
 const mobileNo = ref('')
@@ -45,32 +40,46 @@ function onlyNumber($event) {
 }
 
 async function sendOtp() {
-    if (mobileNo.value.length != 10) {
+    if (mobileNo.value.length !== 10) {
         return validationMsg.value = "10 digit mobile number is required!"
     }
     else {
-        // send otp to backend
-        const response = await new OTPAuth().generateOTP(mobileNo.value)
-        if (response.code == 200) {
-            validationMsg.value = ""
-            // redirect to otp input
-            router.push({
+        router.push({
                 path: '/auth/validate-otp/',
                 query: {
                     "mobileNo": mobileNo.value
                 }
             })
-        }
-        else {
-            validationMsg.value = response.data
-        }
     }
 }
+
+// async function sendOtp() {
+//     if (mobileNo.value.length !== 10) {
+//         return validationMsg.value = "10 digit mobile number is required!"
+//     }
+//     else {
+//         // send otp to backend
+//         const response = await new OTPAuth().generateOTP(mobileNo.value)
+//         if (response.code === 200) {
+//             validationMsg.value = ""
+//             // redirect to otp input
+//             router.push({
+//                 path: '/auth/validate-otp/',
+//                 query: {
+//                     "mobileNo": mobileNo.value
+//                 }
+//             })
+//         }
+//         else {
+//             validationMsg.value = response.data
+//         }
+//     }
+// }
 
 </script>
   
 <style scoped>
-.input {
+.container {
     text-align: center;
     position: absolute;
     left: 0;

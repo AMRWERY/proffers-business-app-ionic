@@ -1,18 +1,35 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>{{businessName}}</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <HeaderTitleVue />
         <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">Tab 1</ion-title>
-                </ion-toolbar>
-            </ion-header>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>Welcome!</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    Analytics coming soon...
+                </ion-card-content>
+                <canvas id="planet-chart"></canvas>
+            </ion-card>
+            <ion-card color="default" href="sales/">
+                <ion-card-header>
+                    <ion-card-title>Sales</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    Check your all sales history.
+                </ion-card-content>
+            </ion-card>
+            <ion-card color="default">
+                <ion-card-header>
+                    <ion-card-title>Customers</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    Coming Soon
+                </ion-card-content>
+            </ion-card>
+
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                <ion-fab-button @click="() => router.push('/tabs/tab3')">
+                <ion-fab-button @click="() => router.push('/sale/create')">
                     <ion-icon :icon="add"></ion-icon>
                 </ion-fab-button>
             </ion-fab>
@@ -21,27 +38,73 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted } from 'vue';
 import router from "../router";
-// import { Geolocation } from '@capacitor/geolocation';
 import {
-    IonPage, IonHeader, IonToolbar, IonTitle,
+    IonPage, IonCardHeader, IonCardTitle,
     IonContent, IonFab, IonFabButton, IonIcon,
+    IonCard, IonCardContent
 } from '@ionic/vue';
-import {add,} from 'ionicons/icons';
-import TokenService from "../utils/TokenService"
+import { add, } from 'ionicons/icons';
+import HeaderTitleVue from '../components/HeaderTitle.vue';
+import { Chart } from 'chart.js';
 
-const businessName = ref("")
-// const printCurrentPosition = async () => {
-//   const coordinates = await Geolocation.getCurrentPosition();
 
-//   console.log('Current position:', coordinates);
-// };
-async function loadHomePage(){
-    const user = await TokenService.getUser()
-    console.log(user.business[0].name)
-    businessName.value = user.business[0].name
+const planetChartData = {
+    type: "bar",
+    data: {
+        labels: ["Mon", "Tue", "Wed", "Thr", "Fri", "Sat", "Sun"],
+        datasets: [
+            {
+                label: "Sales",
+                data: [10, 20, 23, 21, 11, 32, 11],
+                backgroundColor: "#3880ff",
+                borderColor: "#3880ff",
+                borderWidth: 3
+            },
+            //   {
+            //     label: "Expense",
+            //     data: [3, 10, 11, 21, 11, 32, 11],
+            //     backgroundColor: "rgba(54,73,93,.5)",
+            //     borderColor: "#djnf",
+            //     borderWidth: 3
+            //   }
+
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                        padding: 25
+                    }
+                }
+            ]
+        }
+    }
+};
+
+onMounted(() => {
+    const ctx = document.getElementById('planet-chart');
+    new Chart(ctx, planetChartData);
+})
+</script>
+
+<style>
+#card-label {
+    display: flex;
+    justify-content: space-between;
 }
 
-loadHomePage()
-</script>
+#card-content ul {
+    padding-inline-start: 0px !important;
+}
+
+#card-content ul li {
+    display: flex;
+    justify-content: space-between;
+}
+</style>

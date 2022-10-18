@@ -1,29 +1,69 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Tab 3</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <HeaderTitleVue />
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Tab 3</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      
-      <ExploreContainer name="Tab 3 page" />
+      <div class="business-profile">
+        <div class="business-header">
+          <ion-icon :icon="business" size="large"></ion-icon>
+          <ion-label>
+            Settings
+          </ion-label>
+        </div>
+        <div class="business-list">
+          <ion-list>
+            <ion-item href="/business/details/">
+              <ion-label>Business Details</ion-label>
+              <!-- <ion-icon :icon="chevronForward"></ion-icon> -->
+            </ion-item>
+          </ion-list>
+            <ion-item href="/auth/logout/">
+              <ion-label>logout</ion-label>
+            </ion-item>
+        </div>
+        <div class="contact-us">
+          <ion-label>Contact</ion-label><br>
+          <ion-label>uttam11.velani11@gmail.com</ion-label><br>
+          <ion-label>to update business details</ion-label>
+        </div>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
-<script >
-import { defineComponent } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+<script setup>
+import {
+  IonPage, IonContent,
+  IonLabel, IonList, IonItem, IonIcon
+} from '@ionic/vue';
 
-export default defineComponent({
-  name: 'Tab3Page',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
-});
+import HeaderTitleVue from '../components/HeaderTitle.vue';
+import {  business } from 'ionicons/icons';
+
 </script>
+
+<style>
+.business-header {
+  display: flex;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.business-header ion-label {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.business-list {
+  margin-top: 20px;
+}
+
+.contact-us {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 60%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+}
+</style>
