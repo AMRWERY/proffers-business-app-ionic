@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <HeaderTitleVue />
+        <!-- <HeaderTitleVue /> -->
         <ion-content :fullscreen="true">
             <div v-if="display_form">
                 <ion-searchbar placeholder="Search Customer" @ionChange="handleSearch($event)" :debounce="600">
@@ -96,7 +96,7 @@ import InputValidationText from '../../components/InputValidationText.vue';
 import CommonUtils from '../../utils/commonUtils';
 import router from "../../router";
 import Sale from '../../services/sale/createSale';
-import HeaderTitleVue from '@/components/HeaderTitle.vue';
+// import HeaderTitleVue from '@/components/HeaderTitle.vue';
 
 
 const search_result = reactive({
@@ -119,6 +119,7 @@ async function handleSearch($event) {
 }
 
 async function populateForm(name, mobile_no) {
+    search_result.results = [];
     sale_data.cus_mobile_no = mobile_no;
     sale_data.cus_name = name;
 }
@@ -135,13 +136,15 @@ async function GetUserStatus() {
         const response = await new Sale().getSaleStatus(sale_data.cus_mobile_no)
         if (response.code === 200) {
             cusStatus.status = response.data.status;
-            console.log(response)
+
             if (cusStatus.status) {
                 cusStatus.cus_sale_count = response.data.cus_sale_count;
                 cusStatus.cus_sale_value = response.data.cus_sale_value;
                 sale_data.cus_name = response.data.cus_name;
-                mobileInputNote.value = `Count: ${cusStatus.cus_sale_count}, Value: ${cusStatus.cus_sale_value}`
-
+                mobileInputNote.value = `
+                    Sales: ${cusStatus.cus_sale_count}, 
+                    Amount: ${cusStatus.cus_sale_value}
+                `
             } else {
                 mobileInputNote.value = "New customer"
             }

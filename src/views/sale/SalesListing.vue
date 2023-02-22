@@ -7,12 +7,22 @@
             </ion-list-header>
             <ion-list>
                 <div v-for="(sales, date) in date_eg" :key="date">
+                    <ion-list>
                     <ion-item>
                         <b>{{date}}</b>
-                    </ion-item>
-                    <!-- {{date_eg}} -->
+                    </ion-item>                   
                     <div v-for="sale in sales" :key="sale.id">
-                        <ion-card>
+                        <ion-item>
+                            <ion-label id="card-label">
+                                    {{ sale.bus_customer__name ? sale.bus_customer__name : sale.customer__user__mobile_no}} 
+                                    <span>
+                                        {{sale.final_amt}} 
+                                        <!-- <ion-icon :icon="createOutline"></ion-icon>
+                                        <ion-icon :icon="trashOutline"></ion-icon> -->
+                                    </span>
+                                </ion-label>
+                        </ion-item>
+                        <!-- <ion-card>
                             <ion-item>
                                 <ion-label id="card-label">
                                     Customer <span>{{sale.customer.user.mobile_no}}</span>
@@ -28,8 +38,10 @@
                                     minute:'2-digit', hour12: true })}}</span></li>
                                 </ul>
                             </ion-card-content>
-                        </ion-card>
+                        </ion-card> -->
                     </div>
+                </ion-list>   
+
                 </div>
             </ion-list>
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -48,7 +60,7 @@ import router from '../../router';
 import {
     IonPage, IonContent, IonIcon, IonFab, IonFabButton,
     IonList, IonItem, IonLabel, IonListHeader,
-    IonCard, IonCardContent, onIonViewWillEnter
+    onIonViewWillEnter
 } from '@ionic/vue';
 import { arrowBackCircle } from 'ionicons/icons';
 

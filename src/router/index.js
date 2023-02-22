@@ -45,7 +45,12 @@ const routes = [
     name: "create-sale"
   },
   {
-    path: '/offer/create/',
+    path: '/offer/create/discount/',
+    component: () => import('@/views/offer/create/DiscountOffer.vue'),
+    name: "create-offer"
+  },
+  {
+    path: '/offer/create/buy-x-get-y/',
     component: () => import('@/views/offer/CreateOffer.vue'),
     name: "create-offer"
   },

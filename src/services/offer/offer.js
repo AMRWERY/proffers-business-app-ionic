@@ -34,4 +34,19 @@ export default class Offer {
         let response = await new RequestMaker().GET(endpoint);
         return response
     }
+
+    async offerTypeList() {
+        let endpoint = "offer/types/";
+        let response = await new RequestMaker().GET(endpoint);
+        return response;
+    }
+
+    async getBusinessProfile(){
+        let business_id = await TokenService.getBusinessID()
+
+        let endpoint = "offer/business/".concat(business_id);
+        let response = await new RequestMaker().GET(endpoint);
+        console.log(response)
+        return response
+    }
 }

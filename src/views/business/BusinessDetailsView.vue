@@ -36,7 +36,6 @@
                                 {{address.address_line1}}<br>
                                 {{address.address_line2}}<br>
                                 {{city.name}} - {{state.name}}<br>
-                                {{country.name}}<br>
                             </ion-label>
                         </ion-item>
                     </ion-list>
@@ -71,7 +70,6 @@ const category = ref({})
 const address = ref({})
 const city = ref({})
 const state = ref({})
-const country = ref({})
 
 async function getBusiness() {
     const response = await new Business().getBusiness()
@@ -82,7 +80,6 @@ async function getBusiness() {
     address.value = response.data.address[0]
     city.value = response.data.address[0].city
     state.value = response.data.address[0].state
-    country.value = response.data.address[0].country
 }
 
 getBusiness()

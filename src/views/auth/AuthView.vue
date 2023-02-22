@@ -21,12 +21,12 @@ onMounted(async () => {
         console.log(user)
         if (user.business.length === 0){
            router.push({
-                name:"create-business"
+                name:"generate-otp"
            })
         } else if (user.business.length === 1) {
             if (user.business[0].address.length === 0){
                 router.push({
-                    name:"create-business-address"
+                    path:"/tabs/tab1"
                 })
             }else {
                 router.push({

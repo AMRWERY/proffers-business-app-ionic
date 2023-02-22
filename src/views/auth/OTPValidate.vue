@@ -2,26 +2,32 @@
     <ion-page>
         <HeaderTitleVue/>
         <ion-content :fullscreen="true">
+            <IntroImage/>
             <div class="otp-form">
-                <h5>Enter password</h5>
+                <h5>Enter Password</h5>
                 <form @submit.prevent="verifyOtp()">
-                    <ion-row>
+                    <ion-item>
+                        <ion-input v-model="password" id="text-center"></ion-input>
+                    </ion-item>
+                    <!-- <ion-row>
                         <ion-col>
-                            <ion-input id="1" maxlength="1" type="number" class="x" @keyup="handleKeyDown(2, $event)"
+                            <ion-input id="1" maxlength="1" type="number" class="otp-input" @keyup="handleKeyDown(2, $event)"
                                 @keypress="onlyNumber($event)"></ion-input>
-                            <ion-input id="2" maxlength="1" type="number" class="x" @keyup="handleKeyDown(3, $event)"
+                            <ion-input id="2" maxlength="1" type="number" class="otp-input" @keyup="handleKeyDown(3, $event)"
                                 @keypress="onlyNumber($event)"></ion-input>
-                            <ion-input id="3" maxlength="1" type="number" class="x" @keyup="handleKeyDown(4, $event)"
+                            <ion-input id="3" maxlength="1" type="number" class="otp-input" @keyup="handleKeyDown(4, $event)"
                                 @keypress="onlyNumber($event)"></ion-input>
-                            <ion-input id="4" maxlength="1" type="number" class="x" @keyup="handleKeyDown(5, $event)"
+                            <ion-input id="4" maxlength="1" type="number" class="otp-input" @keyup="handleKeyDown(5, $event)"
                                 @keypress="onlyNumber($event)"></ion-input>
                         </ion-col>
-                    </ion-row>
+                    </ion-row> -->
                     <InputValidationText :text=validationMsg /><br>
                     <ion-button type="submit" shape="round">SUBMIT</ion-button>
                 </form>
             </div>
-            <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <IntroFooter/>
+
+            <ion-fab vertical="bottom" horizontal="end">
                 <ion-fab-button @click="() => router.push('/auth/generate-otp/')">
                     <ion-icon :icon="arrowBackCircle"></ion-icon>
                 </ion-fab-button>
@@ -31,57 +37,64 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-import { IonPage, IonContent, IonInput, IonRow, IonCol, IonButton, IonFab, IonFabButton, IonIcon } from '@ionic/vue';
+import { ref } from 'vue';
+import { IonPage, IonContent, IonInput, IonButton,
+     IonFab, IonFabButton, IonIcon, IonItem
+} from '@ionic/vue';
 import {
     arrowBackCircle
 } from 'ionicons/icons';
 import InputValidationText from '../../components/InputValidationText.vue';
 import HeaderTitleVue from '../../components/HeaderTitle.vue';
-import CommonUtils from '../../utils/commonUtils';
+// import CommonUtils from '../../utils/commonUtils';
 import OTPAuth from '../../services/auth/OTPAuth';
 import TokenService from "../../utils/TokenService";
 import router from "../../router";
+import IntroImage from "../../components/IntroImage.vue"
+import IntroFooter from "../../components/IntroFooter.vue"
 
-function onlyNumber($event) {
-    new CommonUtils().onlyNumber($event)
-}
+// function onlyNumber($event) {
+//     new CommonUtils().onlyNumber($event)
+// }
 
-const digits = reactive({})
+// const digits = reactive({})
 const validationMsg = ref("")
 
-function handleKeyDown(next, $event) {
-    if (next == "5" && $event.key !== "Backspace") {
-        if (digits[next] == null) {
-            digits[next] = $event.target.value
-        }
-        // to stop further forward set focus        
-        return
-    }
-    if (next == "2" && $event.key === "Backspace") {
-        // remove all digits
-        digits[next] = null
+// function handleKeyDown(next, $event) {
+//     if (next == "5" && $event.key !== "Backspace") {
+//         if (digits[next] == null) {
+//             digits[next] = $event.target.value
+//         }
+//         // to stop further forward set focus        
+//         return
+//     }
+//     if (next == "2" && $event.key === "Backspace") {
+//         // remove all digits
+//         digits[next] = null
 
-        // to stop further backward set focus   
-        return
-    }
-    if ((new RegExp('^([0-9])$')).test($event.key)) {
-        digits[next] = $event.target.value
-        document.getElementById(next).setFocus()
-    } else if ($event.key === "Backspace") {
-        digits[next] = null
-        document.getElementById(next - 2).setFocus()
-    }
-    // event.target.value
-}
+//         // to stop further backward set focus   
+//         return
+//     }
+//     if ((new RegExp('^([0-9])$')).test($event.key)) {
+//         digits[next] = $event.target.value
+//         document.getElementById(next).setFocus()
+//     } else if ($event.key === "Backspace") {
+//         digits[next] = null
+//         document.getElementById(next - 2).setFocus()
+//     }
+//     // event.target.value
+// }
 
-function makeOtp() {
-    return Object.values(digits).map(digit => digit).join('')
-}
+// function makeOtp() {
+//     return Object.values(digits).map(digit => digit).join('')
+// }
+
+const password = ref(null)
 
 async function verifyOtp() {
     // validate values in digits is 4
-    const otp = makeOtp()
+    // const otp = makeOtp()
+    const otp = password.value
     if (otp.length !== 4) {
         validationMsg.value = "Otp should be 4 digit"
     }
@@ -118,22 +131,21 @@ async function verifyOtp() {
 <style>
 .otp-form {
     text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 90%;
-    margin: 0 auto;
 }
-
-.x {
+.otp-form form ion-item{
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.otp-input {
     display: inline-block;
     width: 50px;
     height: 50px;
     margin: 10px;
     border-bottom: 1px solid black;
     --padding-start: 7px;
+}
+#text-center {
+    text-align: center;
 }
 </style>
 
