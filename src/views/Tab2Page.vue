@@ -34,7 +34,7 @@
                     <ion-item>
                         <ion-label position="fixed">Image</ion-label>
                         <br>
-                        <input type="file" @change="handleImageChange" accept="image/*" />
+                        <input type="file" ref="fileInput" @change="handleImageChange" accept="image/*" />
                     </ion-item>
 
                     <ion-item>
@@ -46,6 +46,8 @@
                         <ion-label position="fixed">Valid Till</ion-label>
                         <ion-input required placeholder="" type="date" v-model="formData.valid_till"></ion-input>
                     </ion-item>
+                    <img :src="imagePreview" v-if="imagePreview" />
+
                     <ion-button type="submit" expand="block">Submit</ion-button>
                 </form>
             </div>
@@ -86,8 +88,17 @@ const formData = ref({
     valid_till: ""
 });
 
+const imagePreview = ref(null)
+
 const handleImageChange = (event) => {
-    formData.value.image = event.target.files[0];
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      imagePreview.value = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
 }
 
 const submitForm = () => {
