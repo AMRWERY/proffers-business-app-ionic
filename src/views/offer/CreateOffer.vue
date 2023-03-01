@@ -4,7 +4,7 @@
         <ion-content :fullscreen="true">
             <div class="discount-form" v-if="display_form">
                 <h6>Create Discount Offer</h6>
-                <form class="" @submit.prevent="() => display_form=false">
+                <form class="" @submit.prevent="() => display_form = false">
                     <ion-item>
                         <ion-label position="stacked">Discount Title</ion-label>
                         <ion-input placeholder="10% Discount above 499/- upto 100/-" required type="text"
@@ -17,14 +17,12 @@
                     </ion-item>
                     <ion-item>
                         <ion-label position="stacked">Min Purchase Amount</ion-label>
-                        <ion-input required placeholder="499" type="number"
-                            v-model="discount_offer_data.min_purchase_amt">
+                        <ion-input required placeholder="499" type="number" v-model="discount_offer_data.min_purchase_amt">
                         </ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label position="stacked">Max Discount Amount</ion-label>
-                        <ion-input required placeholder="100" type="number"
-                            v-model="discount_offer_data.max_discount_amt">
+                        <ion-input required placeholder="100" type="number" v-model="discount_offer_data.max_discount_amt">
                         </ion-input>
                     </ion-item>
                     <ion-item>
@@ -48,22 +46,22 @@
                 <ion-card>
                     <ion-item>
                         <ion-label id="card-label">
-                            {{discount_offer_data.tag_line}}
+                            {{ discount_offer_data.tag_line }}
                         </ion-label>
                     </ion-item>
                     <ion-card-content id="card-content">
                         <ul style="list-style: none;">
-                            <li>Discount <span style="color:black">{{discount_offer_data.min_value}}%</span></li>
-                            <li>Min Purchase Amt. <span
-                                    style="color:black">{{discount_offer_data.min_purchase_amt}}</span></li>
-                            <li>Max Discount Amt. <span
-                                    style="color:black">{{discount_offer_data.max_discount_amt}}</span></li>
-                            <li>Valid From <span style="color:black">{{discount_offer_data.valid_from}}</span></li>
-                            <li>Valid Until <span style="color:black">{{discount_offer_data.valid_until}}</span></li>
+                            <li>Discount <span style="color:black">{{ discount_offer_data.min_value }}%</span></li>
+                            <li>Min Purchase Amt. <span style="color:black">{{ discount_offer_data.min_purchase_amt }}</span>
+                            </li>
+                            <li>Max Discount Amt. <span style="color:black">{{ discount_offer_data.max_discount_amt }}</span>
+                            </li>
+                            <li>Valid From <span style="color:black">{{ discount_offer_data.valid_from }}</span></li>
+                            <li>Valid Until <span style="color:black">{{ discount_offer_data.valid_until }}</span></li>
                         </ul>
                     </ion-card-content>
                 </ion-card>
-                <ion-button type="submit" fill="outline" @click="() => display_form=true" shape="round">EDIT</ion-button>
+                <ion-button type="submit" fill="outline" @click="() => display_form = true" shape="round">EDIT</ion-button>
                 <ion-button type="submit" shape="round" @click="createDiscountOffer()">PUBLISH</ion-button>
             </div>
             <ion-fab vertical="bottom" horizontal="end" slot="fixed">
