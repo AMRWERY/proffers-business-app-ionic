@@ -14,11 +14,7 @@
     </ion-page>
 </template>
   
-<script>
+<script setup>
 import { IonPage, IonHeader, IonTitle, IonContent } from '@ionic/vue';
 import MainComponent from '../components/form/MainComponent.vue';
-
-export default {
-    components: { MainComponent, IonPage, IonHeader, IonTitle, IonContent }
-}
 </script>

@@ -2,16 +2,10 @@
     <ion-nav :root="component"></ion-nav>
 </template>
   
-<script>
+<script setup>
 import { IonNav } from '@ionic/vue';
 import PageOne from './PageOne.vue';
+import { ref } from 'vue';
 
-export default {
-    components: { IonNav },
-    data() {
-        return {
-            component: PageOne,
-        };
-    },
-};
+const component = ref(PageOne, IonNav);
 </script>
