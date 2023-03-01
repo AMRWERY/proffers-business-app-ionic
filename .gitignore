@@ -30,6 +30,8 @@ npm-debug.log*
 /plugins
 /www
 
-/.ini
-/.json
-/.d.ts
+
+
+*.ini
+/jsconfig.json
+*.d.ts
