@@ -35,4 +35,11 @@ npx cap open ios
 ionic build
 npx cap copy
 npx cap sync
-npx cap open android 
+npx cap open android
+
+-------------------------------------------------
+
+login
+9909344545
+
+4312
